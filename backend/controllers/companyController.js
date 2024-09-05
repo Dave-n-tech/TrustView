@@ -1,8 +1,8 @@
-const User = require("../models/userModel");
+const Company = require("../models/companyModel");
 
-const updateUser = async (req, res) => {
+const updateCompany = async (req, res) => {
   const id = req.params.id;
-  //update user info
+  //update company info
   const Keys = Object.keys(req.body);
   const values = Object.values(req.body);
 
@@ -15,13 +15,13 @@ const updateUser = async (req, res) => {
   }
 
   try {
-    await User.update(id, values, columns);
-    res.json("User updated successfully");
+    await Company.update(id, values, columns);
+    res.json("Company updated successfully");
   } catch (error) {
     res.status(500).json({ error: error });
   }
 };
 
 module.exports = {
-  updateUser,
+  updateCompany
 };

@@ -16,8 +16,8 @@ const userReview = {
     return result.insertId
   },
 
-  async update(id, reviewData) {
-    await pool.query('UPDATE user_reviews SET ? WHERE id = ?', [reviewData, id]);
+  async update(id, reviewData, columns) {
+    await pool.query(`UPDATE user_reviews SET ${columns} WHERE id = ?`, [...reviewData, id]);
   },
 
   async deleteById(id) {

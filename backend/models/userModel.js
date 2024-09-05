@@ -29,8 +29,8 @@ const User = {
     return result.insertId;
   },
 
-  async update(id, userData) {
-    await pool.query("UPDATE users SET ? WHERE id = ?", [userData, id]);
+  async update(id, userData, columns) {
+    await pool.query(`UPDATE users SET ${columns} WHERE id = ?`, [...userData, id]);
   },
 
   async deleteId(id) {

@@ -1,6 +1,7 @@
 const hashPassword = require("../utils/hashPassword");
 const User = require("../models/userModel");
 const Company = require("../models/companyModel");
+const jwt = require("jsonwebtoken")
 const {
   generateAccessToken,
   generateRefreshToken,

@@ -90,12 +90,22 @@ const ReviewController = {
 
   async updateReview(req, res) {
     const { type, id } = req.params;
+    const Keys = Object.keys(req.body)
+    const values = Object.values(req.body)
+    const getColumns = require("../utils/getUpdateColumns")
+
+    // get database columns to be updated
+    const columns = getColumns(Keys)
+
+    if (Keys.length === 0) {
+      return res.status(400).json({ message: "No values provided for update" });
+    }
 
     try {
       if (type === "user") {
-        await userReview.update(id, req.body);
+        await userReview.update(id, values, columns);
       } else if (type === "customer") {
-        await customerReview.update(id, req.body);
+        await customerReview.update(id, values, columns);
       } else {
         return res.status(400).json({ message: "invalid review type" });
       }

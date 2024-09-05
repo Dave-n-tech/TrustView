@@ -5,6 +5,8 @@ const reviewRoute = require("./routes/reviewRoute")
 const userAuthRoute = require("./routes/auth/userAuthRoute")
 const companyAuthRoute = require("./routes/auth/companyAuthRoute")
 const AuthController = require("./controllers/authController")
+const userRoute = require("./routes/userRoute")
+const companyRoute = require("./routes/companyRoute")
 
 const app = express()
 app.use(express.json())
@@ -21,10 +23,11 @@ app.use("/api/auth/company", companyAuthRoute)
 app.post("/api/auth/refresh", AuthController.refreshAccessToken)
 app.post("/api/auth/login", AuthController.login)
 
-// app.use("/api/users")
-// app.use("/api/companies")
+// other routes
+app.use("/api/users", userRoute)
+app.use("/api/companies", companyRoute)
 // app.use("/api/tokens")
-
+//app.use("/api/send_review_request")
 
 //review route
 app.use("/api/reviews", reviewRoute)
