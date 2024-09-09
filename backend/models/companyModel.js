@@ -8,7 +8,7 @@ const Company = {
 
   async getById(id) {
     const [rows] = await pool.query("SELECT * FROM companies WHERE id = ?", [
-      id,
+      id
     ]);
     return rows[0];
   },
@@ -31,8 +31,8 @@ const Company = {
     return result.insertId;
   },
 
-  async update(id, companyData) {
-    await pool.query("UPDATE companies SET ? WHERE id = ?", [companyData, id]);
+  async update(id, companyData, columns) {
+    await pool.query(`UPDATE companies SET ${columns} WHERE id = ?`, [companyData, id]);
   },
 
   async deleteId(id) {

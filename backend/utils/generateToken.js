@@ -14,7 +14,18 @@ const generateRefreshToken = (user) => {
   );
 };
 
+const generateReviewToken = (user) => {
+  return jwt.sign(
+    { name: user.name, email: user.email },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1day",
+    }
+  );
+};
+
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
+  generateReviewToken,
 };

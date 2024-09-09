@@ -121,16 +121,16 @@ const ReviewController = {
 
     try {
       if (type === "user") {
-        await userReview.delete(id);
+        await userReview.deleteById(id);
       } else if (type === "customer") {
-        await customerReview.delete(id);
+        await customerReview.deleteById(id);
       } else {
         return res.status(400).json({ message: "Invalid review type" });
       }
 
       res.json({ message: "Review deleted" });
-    } catch (error) {
-      res.status(500).json({ message: "Error deleting review", error: error });
+    } catch (err) {
+      res.status(500).json({ message: "Error deleting review", error: err });
     }
   },
 };
