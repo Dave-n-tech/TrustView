@@ -1,5 +1,21 @@
 const User = require("../models/userModel");
 
+const getUser = async (req, res) => {
+  const id = req.params.id 
+
+  try {
+    const user = await User.getById(id)
+
+    if(!user){
+      res.status(404).json({message: "User not found"})
+    }
+
+    res.json(user)
+  } catch (error) {
+    res.status(500).json({message: "Error fetching user", error: error})
+  }
+}
+
 const updateUser = async (req, res) => {
   const id = req.params.id;
   //update user info
@@ -23,5 +39,6 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
-  updateUser,
+  getUser,
+  updateUser
 };
