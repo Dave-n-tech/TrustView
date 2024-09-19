@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "5m",
   });
 };
 
@@ -19,7 +19,7 @@ const generateReviewToken = (user) => {
     { name: user.name, email: user.email },
     process.env.JWT_SECRET,
     {
-      expiresIn: "1d",
+      expiresIn: "1day",
     }
   );
 };
