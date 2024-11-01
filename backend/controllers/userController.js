@@ -1,5 +1,15 @@
 const User = require("../models/userModel");
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.getAll()
+    res.json(users)
+
+  } catch (error) {
+    res.status(500).json({ message: "error getting users", error: error });
+  }
+}
+
 const getUser = async (req, res) => {
   const id = req.params.id 
 
@@ -39,6 +49,7 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
+  getAllUsers,
   getUser,
   updateUser
 };

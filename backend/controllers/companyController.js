@@ -1,6 +1,7 @@
 const Company = require("../models/companyModel");
 const nodemailer = require("nodemailer");
 const { generateReviewToken } = require("../utils/generateToken");
+const { getById } = require("../models/userReviewModel");
 
 const getAllCompanies = async (req, res) => {
   try {
@@ -9,6 +10,17 @@ const getAllCompanies = async (req, res) => {
     res.json(companies);
   } catch (error) {
     res.status(500).json({ message: "error getting companies", error: error });
+  }
+};
+
+const getCompanyById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const company = await Company.getById(id);
+
+    res.json(company);
+  } catch (error) {
+    res.status(500).json({ message: "error fetching company", error: error });
   }
 };
 
@@ -41,16 +53,15 @@ const sendEmailToCustomer = async (req, res) => {
   //send email with generated review link
 
   const { name, email } = req.body;
-  const {id} = req.params
-  let companyEmail
+  const { id } = req.params;
+  let companyEmail;
   const token = generateReviewToken(req.body);
 
-
   try {
-    const company = await Company.getById(id)
-    companyEmail = company.email
+    const company = await Company.getById(id);
+    companyEmail = company.email;
   } catch (error) {
-    res.status(500).json({message: "an error occured", error: error})
+    res.status(500).json({ message: "an error occured", error: error });
   }
 
   if (!token) {
@@ -92,6 +103,7 @@ const sendEmailToCustomer = async (req, res) => {
 
 module.exports = {
   getAllCompanies,
+  getCompanyById,
   updateCompany,
   sendEmailToCustomer,
 };

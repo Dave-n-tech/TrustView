@@ -18,7 +18,12 @@ const AuthController = {
 
       res.status(201).json({
         message: "user registered successfully",
-        userId: newUser.id,
+        user: {
+          id: newUser,
+          name: username,
+          email: email,
+          role: "user"
+        },
         access_token: accessToken,
         refresh_token: refreshToken,
       });
@@ -44,7 +49,13 @@ const AuthController = {
 
       res.status(201).json({
         message: "company account created",
-        companyId: newCompany.id,
+        user: {
+          id: newCompany,
+          email: email,
+          phoneNo: phone_number,
+          address: address,
+          role: "company"
+        },
         access_token: accessToken,
         refresh_token: refreshToken,
       });
@@ -82,6 +93,7 @@ const AuthController = {
 
       res.status(200).json({
         message: "login successful",
+        user: userOrCompany,
         access_token: accessToken,
         refresh_token: refreshToken,
       });

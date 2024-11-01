@@ -11,6 +11,11 @@ const userReview = {
     return rows[0]
   },
 
+  async getByUserId(id) {
+    const [rows] = await pool.query('SELECT * FROM user_reviews WHERE userId = ?', [id]);
+    return rows
+  },
+
   async create(reviewData) {
     const [result] = await pool.query('INSERT INTO user_reviews (companyId, userId, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?)', reviewData)
     return result.insertId

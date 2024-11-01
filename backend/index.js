@@ -7,10 +7,19 @@ const companyAuthRoute = require("./routes/auth/companyAuthRoute")
 const AuthController = require("./controllers/authController")
 const userRoute = require("./routes/userRoute")
 const companyRoute = require("./routes/companyRoute")
-const tokenRoute = require("./routes/tokensRoute")
+const tokensRoute = require("./routes/tokensRoute")
+const cors = require("cors")
 
 const app = express()
 app.use(express.json())
+
+app.use(
+    cors({
+      origin: [process.env.CLIENT_URL, "http://localhost:5173"],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    })
+  );
 
 connectDB()
 
@@ -54,7 +63,7 @@ app.post("/api/auth/login", AuthController.login)
 // other routes
 app.use("/api/users", userRoute)
 app.use("/api/companies", companyRoute)
-app.use("/api/verify-token", tokenRoute)
+app.use("/api/verify-token", tokensRoute)
 
 //review route
 app.use("/api/reviews", reviewRoute)

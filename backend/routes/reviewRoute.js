@@ -6,6 +6,7 @@ const { getSentimentScore } = require("../utils/getSentimentScore")
 
 // route for both customer and user reviews
 router.get("/", ReviewController.getAllReviews)
+router.get("/users/:id", ReviewController.getReviewsByUserId)
 
 // dynamic routes for handling reviews based on type
 router.get("/:type", ReviewController.getAllReviewsByType)

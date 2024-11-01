@@ -61,6 +61,17 @@ const ReviewController = {
     }
   },
 
+  async getReviewsByUserId(req, res) {
+    const id = req.params.id;
+
+    try {
+      const userReviews = await userReview.getByUserId(id);
+      res.json(userReviews);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching reviews", error: error });
+    }
+  },
+
   async createReview(req, res) {
     const type = req.params.type;
 

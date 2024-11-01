@@ -1,13 +1,12 @@
 import { Navbar } from "../../components/user/Navbar";
+import { HeroSection } from "../../components/user/HeroSection";
+import { ReviewSection } from "../../components/user/ReviewSection";
 
 export const UserLandingPage = () => {
   return (
     <>
-      <Navbar/>
-      {/* Hero section */}
-      <section className="container mx-auto mt-3 border-blue-700 border-2">
-
-      </section>
+      <HeroSection/>
+      <ReviewSection/>
     </>
   );
 };
