@@ -17,7 +17,7 @@ export const LoginForm = ({isBusiness}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     await login(formData)
-    alert("Successfully registered user");
+    alert("Successfully signed in");
     isBusiness ? navigate("/business") : navigate("/");
   }
 

@@ -2,7 +2,7 @@ const { pool } = require("../config/db");
 
 const userReview = {
   async getAll() {
-    const [rows] = await pool.query('SELECT * FROM user_reviews')
+    const [rows] = await pool.query('SELECT * FROM user_reviews ORDER BY createdAt DESC')
     return rows
   },
 
@@ -12,12 +12,17 @@ const userReview = {
   },
 
   async getByUserId(id) {
-    const [rows] = await pool.query('SELECT * FROM user_reviews WHERE userId = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM user_reviews WHERE userId = ? ORDER BY createdAt DESC', [id]);
+    return rows
+  },
+
+  async getByCompanyId(id) {
+    const [rows] = await pool.query('SELECT * FROM user_reviews WHERE companyId = ? ORDER BY createdAt DESC', [id]);
     return rows
   },
 
   async create(reviewData) {
-    const [result] = await pool.query('INSERT INTO user_reviews (companyId, userId, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?)', reviewData)
+    const [result] = await pool.query('INSERT INTO user_reviews (companyId, userId, title, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?, ?)', reviewData)
     return result.insertId
   },
 

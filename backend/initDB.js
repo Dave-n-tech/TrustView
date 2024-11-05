@@ -31,9 +31,9 @@ const createCustomerReviewTable = `
 CREATE TABLE IF NOT EXISTS customer_reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
     companyId INT,
-    companyWebsite VARCHAR(255) NULL; //optional
     customerName VARCHAR(255),
     customerEmail VARCHAR(255),
+    title TEXT NOT NULL,
     content TEXT NOT NULL,
     rating INT NOT NULL,
     tag ENUM('unverified', 'verified') NOT NULL DEFAULT 'verified',
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS user_reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT,
     companyId INT,
-    companyWebsite VARCHAR(255) NULL;
+    title TEXT NOT NULL,
     content TEXT NOT NULL,
     rating INT NOT NULL,
     sentimentScore VARCHAR(50),

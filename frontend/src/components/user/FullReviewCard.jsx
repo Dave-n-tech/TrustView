@@ -63,7 +63,7 @@ export const FullReviewCard = ({company, user, review}) => {
           <p>"{review.content}"</p>
         </div>
         <hr />
-        <div className="flex justify-between">
+        <div className="flex flex-row justify-between">
           <span>Status: {review.tag}</span>
           <span>
             Sentiment: {translateSentimentScore(review.sentimentScore)}

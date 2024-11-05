@@ -1,75 +1,68 @@
-require("dotenv").config()
-const express = require("express")
-const { connectDB } = require("./config/db")
-const reviewRoute = require("./routes/reviewRoute")
-const userAuthRoute = require("./routes/auth/userAuthRoute")
-const companyAuthRoute = require("./routes/auth/companyAuthRoute")
-const AuthController = require("./controllers/authController")
-const userRoute = require("./routes/userRoute")
-const companyRoute = require("./routes/companyRoute")
-const tokensRoute = require("./routes/tokensRoute")
-const cors = require("cors")
+require("dotenv").config();
+const express = require("express");
+const { connectDB } = require("./config/db");
+const reviewRoute = require("./routes/reviewRoute");
+const userAuthRoute = require("./routes/auth/userAuthRoute");
+const companyAuthRoute = require("./routes/auth/companyAuthRoute");
+const AuthController = require("./controllers/authController");
+const userRoute = require("./routes/userRoute");
+const companyRoute = require("./routes/companyRoute");
+const tokensRoute = require("./routes/tokensRoute");
+const cors = require("cors");
+const { getSentimentScore } = require("./utils/getSentimentScore");
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
 app.use(
-    cors({
-      origin: [process.env.CLIENT_URL, "http://localhost:5173"],
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "DELETE"],
-    })
-  );
+  cors({
+    origin: [process.env.CLIENT_URL, "http://localhost:5173"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
-connectDB()
+connectDB();
 
 app.get("/", (req, res) => {
-    res.send("server running")
-})
-
-/*
- All routes
-    auth:
-    /api/auth/user/register (post)
-    /api/auth/company/register (post)
-    /api/auth/login (post)
-    /api/auth/refresh (post)
-
-    company:
-    /api/auth/companies/:id (patch)
-    /api/auth/companies/:id/send-review-request (post) send email to customer
-
-    user: 
-    /api/auth/users/:id (patch)
-
-    token: * no need to store token in database, remember to delete token table and token model and update token controller
-    /api/verify-token/:token (post) verify token from url
-
-    reviews:
-    /api/reviews (get) all reviews
-    /api/reviews/:type (get) all reviews of type user or customer
-    /api/reviews/:type (post) create review of type user or customer
-    /api/reviews/:type/:id (get)
-    /api/reviews/:type/:id (patch)
-    /api/reviews/:type/:id (delete)
-*/
+  res.send("server running");
+});
 
 //auth routes
-app.use("/api/auth/user", userAuthRoute)
-app.use("/api/auth/company", companyAuthRoute)
-app.post("/api/auth/refresh", AuthController.refreshAccessToken)
-app.post("/api/auth/login", AuthController.login)
+app.use("/api/auth/user", userAuthRoute);
+app.use("/api/auth/company", companyAuthRoute);
+app.post("/api/auth/refresh", AuthController.refreshAccessToken);
+app.post("/api/auth/login", AuthController.login);
 
 // other routes
-app.use("/api/users", userRoute)
-app.use("/api/companies", companyRoute)
-app.use("/api/verify-token", tokensRoute)
+app.use("/api/users", userRoute);
+app.use("/api/companies", companyRoute);
+app.use("/api/verify-token", tokensRoute);
 
 //review route
-app.use("/api/reviews", reviewRoute)
+app.use("/api/reviews", reviewRoute);
+
+//get review sentiment score
+app.post("/api/sentiment", async (req, res) => {
+  const review = req.body.review;
+
+  try {
+    const sentiment = await getSentimentScore(review);
+    res.json(sentiment);
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Error getting sentiment result from gemini",
+        error: error,
+      });
+  }
+});
 
 
-const port = 3000
+
+
+const port = 3000;
 app.listen(process.env.PORT || port, () => {
-    console.log(`server running on port ${port || process.env.PORT}`)
-})
+  console.log(`server running on port ${port || process.env.PORT}`);
+});

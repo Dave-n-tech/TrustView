@@ -17,6 +17,9 @@ import { UserLayout } from "./Layouts/UserLayout";
 import { BusinessLayout } from "./Layouts/BusinessLayout";
 import { SearchResultPage } from "./pages/shared/SearchResultPage";
 
+import { ProtectedRoute } from "./components/user/ProtectedRoute";
+
+
 function App() {
   return (
     <>
@@ -26,7 +29,7 @@ function App() {
           <Route path="/reviews/:type/:id" element={<ReviewPage />} />
           <Route path="/register/user" element={<UserRegisterPage />} />
           <Route path="/dashboard/user" element={<UserDashboard />} />
-          <Route path="/submit-review" element={<SubmitReview />} />
+          <Route path="/submit-review/:companyId?" element={<SubmitReview />} />
           <Route path="/user/:id" element={<UserProfile/>} />
           <Route path="/company/:id/:name" element={<BusinessProfile />}/>
           <Route path="/login" element={<LoginPage />} />

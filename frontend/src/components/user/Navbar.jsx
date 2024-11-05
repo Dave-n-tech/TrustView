@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const { authData, loggedIn } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate()
 
-  // console.log(authData);
+  const handleReviewRedirect = () => {
+    if (authData) {
+      navigate("/submit-review"); // Redirect to submit-review if logged in
+    } else {
+      navigate("/login"); // Redirect to login if not logged in
+    }
+  };
+
+  console.log(authData);
   return (
     <header className="container bg-white w-full mx-auto py-2 px-4">
       <div className="flex items-center justify-between">
@@ -20,14 +30,14 @@ export const Navbar = () => {
           id="menu"
           className={`fixed top-0 ${menuOpen ? "menu-open" : "menu-close"} bg-slate-200 h-screen px-16 py-16 flex flex-col space-y-6 items-center justify-start md:h-full md:flex-row md:space-x-6 md:space-y-0 md:relative md:top-0 md:right-0 md:bg-white md:p-0 md:m-0`}
         >
-          <a
-            href="#reviews"
+          <button
+            onClick={handleReviewRedirect}
             className="hover:font-semibold hover:text-PrimaryBlue"
           >
-            Read Reviews
-          </a>
-          {/* if user logged in, show user name and profile icon */}
-          {authData !== null ? (
+            Write Review
+          </button>
+          {/* if user logged in (authData !== null), show user name and profile icon */}
+          {loggedIn ? (
             <div className="flex flex-col md:flex-row space-x-3 items-center">
               <img
                 src="https://media.istockphoto.com/id/2151669184/vector/vector-flat-illustration-in-grayscale-avatar-user-profile-person-icon-gender-neutral.jpg?s=612x612&w=0&k=20&c=UEa7oHoOL30ynvmJzSCIPrwwopJdfqzBs0q69ezQoM8="

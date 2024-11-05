@@ -42,8 +42,7 @@ export const ReviewSection = () => {
         });
         setReviews(reviewsWithCompanyNames);
 
-        console.log(reviews);
-        console.log(reviewsWithCompanyNames);
+        
       } catch (error) {
         setErrMsg(error.message);
         console.error(error);

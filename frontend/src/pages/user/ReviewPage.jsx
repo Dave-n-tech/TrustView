@@ -43,7 +43,7 @@ export const ReviewPage = () => {
 
 
   return (
-    <div className="container mx-auto mt-12 mb-8 h-screen">
+    <div className="container mx-auto mt-12 p-4 mb-8 h-screen">
       <FullReviewCard review={review} user={user} company={company} />
     </div>
   );

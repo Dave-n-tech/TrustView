@@ -1,6 +1,19 @@
-import heroImage from "../../assets/heroImage.jpg"
+import heroImage from "../../assets/heroImage.jpg";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 export const HeroSection = () => {
+  const { authData } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleReviewRedirect = () => {
+    if (authData) {
+      navigate("/submit-review"); // Redirect to submit-review if logged in
+    } else {
+      navigate("/login"); // Redirect to login if not logged in
+    }
+  };
   return (
     <section className="container flex flex-col md:flex-row items-start mx-auto mt-4 mb-3 px-3 space-y-0 md:space-x-2 ">
       <div className="flex flex-col items-center md:items-start mb-10  space-y-6 py-8 md:w-1/2">
@@ -13,12 +26,12 @@ export const HeroSection = () => {
           innovation.
         </p>
         <div className="flex justify-center md:justify-start">
-          <a
-            href="/submit-review"
+          <button
+            onClick={handleReviewRedirect}
             className="bg-PrimaryBlue text-white text-center py-2 text-sm w-36 h-10 rounded-md"
           >
             Write a Review
-          </a>
+          </button>
         </div>
       </div>
 

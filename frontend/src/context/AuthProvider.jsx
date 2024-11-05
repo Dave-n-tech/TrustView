@@ -4,39 +4,55 @@ import axios from "../api/axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
   const [authData, setAuthData] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const url = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
-    console.log(storedToken)
+
     // check if token valid (send request to verify token)
     const verifyToken = async () => {
+      if(!storedToken){
+        setAuthLoading(false)
+      };
+
       try {
-        const response = await axios.post('/verify-token', {}, {
-          headers: {
-            "Authorization": `Bearer ${storedToken}`,
-          },
-        }); 
+        const response = await axios.post(
+          "/verify-token",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
 
-        console.log(response.data)
-        
+        console.log(response.data);
+        setLoggedIn(true);
       } catch (error) {
-        console.error(error)
+        console.error(error);
 
-        if(error.response.status === 401){
-          setAuthData(null)
+        if (error.response.status === 401) {
+          setAuthData(null);
+          setLoggedIn(false);
+          localStorage.removeItem("authData");
+          localStorage.removeItem("authToken");
         }
+      } finally {
+        setAuthLoading(false);
       }
     };
 
-    verifyToken()
     // if token valid fetch authdata else clear authdata in localstorage
 
     if (storedToken) {
+      verifyToken();
+      setToken(storedToken);
       const storedData = JSON.parse(localStorage.getItem("authData"));
       setAuthData(storedData);
     }
@@ -80,6 +96,7 @@ export const AuthProvider = ({ children }) => {
       });
       const { access_token, refresh_token, user } = await response.data;
       setAuthData(user);
+      setToken(access_token);
       setLoggedIn(true);
 
       localStorage.setItem("authToken", access_token);
@@ -94,6 +111,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setAuthData(null);
+    setToken(null);
+    setLoggedIn(false);
     localStorage.removeItem("authToken");
     localStorage.removeItem("authData");
     localStorage.removeItem("refreshToken");
@@ -103,11 +122,13 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         authData,
+        token,
         login,
         register,
         logout,
         error,
         loading,
+        authLoading,
         loggedIn,
       }}
     >
