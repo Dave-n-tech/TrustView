@@ -13,7 +13,7 @@ router.get("/company/:id/all", ReviewController.getAllCompanyReviewsByCompanyId)
 router.get("/:type", ReviewController.getAllReviewsByType)
 router.post("/:type", authorizeRoles(["user"]), ReviewController.createReview)
 router.get("/:type/:id", ReviewController.getReviewById)
-router.patch("/:type/:id", authorizeRoles(["user"]), ReviewController.updateReview)
+router.patch("/:type/:id", authorizeRoles(["user", "company"]), ReviewController.updateReview)
 router.delete("/:type/:id", authorizeRoles(["user"]), ReviewController.deleteReview)
 
 

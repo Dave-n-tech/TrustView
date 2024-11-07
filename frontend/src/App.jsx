@@ -11,6 +11,7 @@ import { BusinessLandingPage } from "./pages/business/BusinessLandingPage";
 import { BusinessRegisterPage } from "./pages/business/BusinessRegisterPage";
 import { BusinessDashboard } from "./pages/business/BusinessDashboard";
 import { ReviewInvitePage } from "./pages/business/ReviewInvitePage";
+import { DashboardReviewPage } from "./pages/business/DashboardReviewPage";
 
 import { LoginPage } from "./pages/shared/LoginPage";
 import { UserLayout } from "./Layouts/UserLayout";
@@ -18,6 +19,8 @@ import { BusinessLayout } from "./Layouts/BusinessLayout";
 import { SearchResultPage } from "./pages/shared/SearchResultPage";
 
 import { ProtectedRoute } from "./components/user/ProtectedRoute";
+import { DashboardAnalytics } from "./pages/business/DashboardAnalytics";
+import { ProfileSettings } from "./pages/business/ProfileSettings";
 
 
 function App() {
@@ -38,9 +41,14 @@ function App() {
         <Route element={<BusinessLayout />}>
           <Route path="/business" element={<BusinessLandingPage />} />
           <Route path="/register/business" element={<BusinessRegisterPage />} />
-          <Route path="/invite-review" element={<ReviewInvitePage />} />
         </Route>
-          <Route path="/dashboard/business/:id" element={<BusinessDashboard />} />
+          
+        <Route path="/dashboard/business/:id" element={<BusinessDashboard />}>
+          <Route path="/dashboard/business/:id/reviews" element={<DashboardReviewPage/>}/>
+          <Route path="/dashboard/business/:id/analytics" element={<DashboardAnalytics />} />
+          <Route path="/dashboard/business/:id/invite-review" element={<ReviewInvitePage />} />
+          <Route path="/dashboard/business/:id/profile-settings" element={<ProfileSettings />} />
+        </Route>
 
         {/* shared Routes */}
         <Route path="/search?query" element={<SearchResultPage />} />

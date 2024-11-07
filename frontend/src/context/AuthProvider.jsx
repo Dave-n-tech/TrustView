@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         setLoggedIn(true);
       } catch (error) {
         console.error(error);
+        setError("Session expired, kindly login again")
 
         if (error.response.status === 401) {
           setAuthData(null);

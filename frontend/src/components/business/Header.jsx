@@ -11,11 +11,11 @@ export const Header = () => {
 
   const handleRedirect = () => {
     if (authData) {
-      navigate("/invite-review");
+      navigate(`/dashboard/business/${authData.id}/invite-review`);
     } else {
       navigate("/login/business");
     }
-  }
+  };
 
   return (
     <header className="container bg-white w-full mx-auto py-2 px-4">
@@ -50,7 +50,12 @@ export const Header = () => {
                 className="rounded-full w-12 h-12"
               />
               <p>{authData.name}</p>
-              <a href={`/dashboard/business/${authData.id}`} className="hover:font-semibold hover:text-PrimaryBlue">Dashboard</a>
+              <a
+                href={`/dashboard/business/${authData.id}/reviews`}
+                className="hover:font-semibold hover:text-PrimaryBlue"
+              >
+                Dashboard
+              </a>
             </div>
           ) : (
             <div className="flex flex-col space-y-6 items-center md:space-x-6 md:flex-row md:space-y-0">
@@ -60,14 +65,13 @@ export const Header = () => {
               >
                 Login
               </a>
+              <Link to={"/register/business"}>
+                <button className="bg-PrimaryBlue text-white text-sm w-36 h-10 rounded-md">
+                  Get Started
+                </button>
+              </Link>
             </div>
           )}
-
-          <Link to={"/register/business"}>
-            <button className="bg-PrimaryBlue text-white text-sm w-36 h-10 rounded-md">
-              Get Started
-            </button>
-          </Link>
         </div>
 
         <button

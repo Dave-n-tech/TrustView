@@ -44,7 +44,7 @@ export const AnalyticsSummary = ({ analytics }) => {
 
         {/* Sentiment Distribution */}
         <div className="p-4 bg-white rounded-md shadow-sm">
-          <p className="text-lg font-semibold">Average Sentiment</p>
+          <p className="text-lg font-semibold">Avg Sentiment</p>
           <div className="text-sm mt-2">
             <p>
               <span className={`${sentimentColor(analytics.averageSentiment)}`}>
