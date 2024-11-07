@@ -72,7 +72,7 @@ const ReviewController = {
     }
   },
 
-  async getReviewsByCompanyId(req, res) {
+  async getUserReviewsByCompanyId(req, res) {
     const id = req.params.id;
 
     try {
@@ -80,6 +80,21 @@ const ReviewController = {
       res.json(userReviews);
     } catch (error) {
       res.status(500).json({ message: "Error fetching reviews", error: error });
+    }
+  },
+
+  async getAllCompanyReviewsByCompanyId(req, res) {
+    const id = req.params.id
+
+    try {
+      const userReviews = await userReview.getByCompanyId(id)
+      const customerReviews = await customerReview.getByCompanyId(id)
+
+      res.json([...userReviews, ...customerReviews])
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error fetching reviews", error: error.message });
     }
   },
 

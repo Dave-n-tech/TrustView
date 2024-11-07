@@ -34,12 +34,13 @@ const AuthController = {
 
   async registerCompany(req, res) {
     try {
-      const { name, email, password, phone_number, address } = req.body;
+      const { name, email, password, website, phone_number, address } = req.body;
       const hashedPassword = await hashPassword.hash(password);
       const newCompany = await Company.create([
         name,
         email,
         hashedPassword,
+        website,
         phone_number,
         address,
         'company'

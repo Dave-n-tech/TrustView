@@ -18,9 +18,13 @@ export const UserRegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(formData, false);
-    alert("Successfully registered user");
-    navigate("/");
+    try {
+      await register(formData, false);
+      alert("Successfully registered user");
+      navigate("/");
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   return (

@@ -71,14 +71,14 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true,
       });
       const { access_token, refresh_token, user } = await response.data;
-      setAuthDpata(user);
+      setAuthData(user);
       setLoggedIn(true);
 
       localStorage.setItem("authToken", access_token);
       localStorage.setItem("refreshToken", refresh_token);
       localStorage.setItem("authData", JSON.stringify(user));
     } catch (error) {
-      setError(error.message || "Registration failed");
+      setError(error.message || "Registration failed, please try again");
     } finally {
       setLoading(false);
     }

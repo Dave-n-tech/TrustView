@@ -41,8 +41,6 @@ export const ReviewSection = () => {
           };
         });
         setReviews(reviewsWithCompanyNames);
-
-        
       } catch (error) {
         setErrMsg(error.message);
         console.error(error);
@@ -84,6 +82,7 @@ export const ReviewSection = () => {
             />
           );
         })}
+      {reviews.length === 0 && <p className="text-center mx-auto"> No recent reviews</p>}
       </div>
       <div className="container flex items-center justify-center mx-5 space-x-3">
         <button

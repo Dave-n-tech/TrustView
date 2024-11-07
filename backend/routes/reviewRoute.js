@@ -6,7 +6,8 @@ const authorizeRoles = require("../middleware/authMiddleware")
 // route for both customer and user reviews
 router.get("/", ReviewController.getAllReviews)
 router.get("/users/:id", ReviewController.getReviewsByUserId)
-router.get("/company/:id", ReviewController.getReviewsByCompanyId)
+router.get("/company/:id", ReviewController.getUserReviewsByCompanyId)
+router.get("/company/:id/all", ReviewController.getAllCompanyReviewsByCompanyId)
 
 // dynamic routes for handling reviews based on type
 router.get("/:type", ReviewController.getAllReviewsByType)

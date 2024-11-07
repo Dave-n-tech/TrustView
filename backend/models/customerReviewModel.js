@@ -13,6 +13,11 @@ const customerReview = {
     return rows[0];
   },
 
+  async getByCompanyId(id) {
+    const [rows] = await pool.query('SELECT * FROM customer_reviews WHERE companyId = ? ORDER BY createdAt DESC', [id]);
+    return rows
+  },
+
   async create(reviewData) {
     const [result] = await pool.query(
       `INSERT INTO customer_reviews (companyId, tokenId, customerName, customerEmail, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,

@@ -25,7 +25,7 @@ const Company = {
 
   async create(companyData) {
     const [result] = await pool.query(
-      "INSERT INTO companies (name, email, password, phone_number, address, role) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO companies (name, email, password, website, phone_number, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)",
       companyData
     );
     return result.insertId;

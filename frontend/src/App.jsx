@@ -32,15 +32,15 @@ function App() {
           <Route path="/submit-review/:companyId?" element={<SubmitReview />} />
           <Route path="/user/:id" element={<UserProfile/>} />
           <Route path="/company/:id/:name" element={<BusinessProfile />}/>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/:userType?" element={<LoginPage />} />
         </Route>
 
         <Route element={<BusinessLayout />}>
           <Route path="/business" element={<BusinessLandingPage />} />
           <Route path="/register/business" element={<BusinessRegisterPage />} />
-          <Route path="/dashboard/business" element={<BusinessDashboard />} />
           <Route path="/invite-review" element={<ReviewInvitePage />} />
         </Route>
+          <Route path="/dashboard/business/:id" element={<BusinessDashboard />} />
 
         {/* shared Routes */}
         <Route path="/search?query" element={<SearchResultPage />} />
