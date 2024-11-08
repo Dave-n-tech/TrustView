@@ -14,12 +14,12 @@ const generateRefreshToken = (user) => {
   );
 };
 
-const generateReviewToken = (user) => {
+const generateReviewToken = (email) => {
   return jwt.sign(
-    { name: user.name, email: user.email },
+    { email: email, role: "customer" },
     process.env.JWT_SECRET,
     {
-      expiresIn: "1d",
+      expiresIn: "7d"
     }
   );
 };

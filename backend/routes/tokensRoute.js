@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const TokenController = require("../controllers/tokenController")
+const TokenController = require("../controllers/tokenController");
 
-router.post("/", TokenController.verifyToken)
+router.post("/", TokenController.verifyToken);
 
-module.exports = router
+module.exports = router;

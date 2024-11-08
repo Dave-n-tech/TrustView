@@ -20,7 +20,7 @@ const customerReview = {
 
   async create(reviewData) {
     const [result] = await pool.query(
-      `INSERT INTO customer_reviews (companyId, tokenId, customerName, customerEmail, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO customer_reviews (companyId, customerName, customerEmail, title, content, rating, tag, sentimentScore) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       reviewData
     );
     return result.insertId;

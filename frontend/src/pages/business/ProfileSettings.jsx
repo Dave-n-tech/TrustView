@@ -1,51 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "../../api/axios";
+import { AuthContext } from "../../context/AuthProvider";
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ProfileSettings = () => {
-  // Initial form state
+  const { authData, token } = useContext(AuthContext);
+  const { id } = useParams();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
+    name: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    website: ""
   });
+  const [updatedData, setUpdatedData] = useState({})
+  const navigate = useNavigate()
 
-  // Simulate fetching existing profile data (useEffect to mimic API call)
   useEffect(() => {
     // Replace with an actual API call to fetch user data
-    const fetchUserData = async () => {
-      const existingData = {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        phone: '123-456-7890',
-        address: '123 Main St, City, Country',
-      };
-      setFormData(existingData);
-    };
+    const fetchCompanyData = async () => {
+      const response = await axios.get(`/companies/${id}`)
+      const company = response.data
 
-    fetchUserData();
+      console.log(company)
+
+      setFormData({
+        name: company.name,
+        email: company.email,
+        phone_number: company.phone_number,
+        address: company.address,
+        website: company.website
+      });
+    }
+
+    fetchCompanyData()
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setUpdatedData({...updatedData, [name]: value })
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to handle form submission (e.g., send a request to the backend)
-    console.log('Updated Profile Data:', formData);
+    setLoading(true);
+    setError("");
+    console.log("Updated Profile Data:", updatedData);
 
-    // Provide user feedback, e.g., success message
-    alert('Profile updated successfully!');
+    try {
+      const response = await axios.patch(`/companies/${id}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      alert("Changes saved successfully");
+      navigate(0)
+    } catch (error) {
+      console.error(error);
+      setError("Error updating profile");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="max-w-2xl mt-10 mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <p className="text-red-500 bg-red-200 text-center"> {error}</p>
+        )}
         {/* Name Input */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
             Name
           </label>
           <input
@@ -62,7 +99,10 @@ export const ProfileSettings = () => {
 
         {/* Email Input */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email
           </label>
           <input
@@ -79,14 +119,17 @@ export const ProfileSettings = () => {
 
         {/* Phone Input */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700"
+          >
             Phone
           </label>
           <input
             type="tel"
             id="phone"
-            name="phone"
-            value={formData.phone}
+            name="phone_number"
+            value={formData.phone_number}
             onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Enter your phone number"
@@ -95,7 +138,10 @@ export const ProfileSettings = () => {
 
         {/* Address Input */}
         <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="address"
+            className="block text-sm font-medium text-gray-700"
+          >
             Address
           </label>
           <input
@@ -109,15 +155,34 @@ export const ProfileSettings = () => {
           />
         </div>
 
+        {/* website */}
+        <div>
+          <label
+            htmlFor="website"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Website
+          </label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            required
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter your website"
+          />
+        </div>
+
         {/* Submit Button */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Save Changes
+          {loading ? "Saving..." : "Save Changes"}
         </button>
       </form>
     </div>
   );
 };
-

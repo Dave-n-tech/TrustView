@@ -11,7 +11,7 @@ router.get("/company/:id/all", ReviewController.getAllCompanyReviewsByCompanyId)
 
 // dynamic routes for handling reviews based on type
 router.get("/:type", ReviewController.getAllReviewsByType)
-router.post("/:type", authorizeRoles(["user"]), ReviewController.createReview)
+router.post("/:type", authorizeRoles(["user", "customer"]), ReviewController.createReview)
 router.get("/:type/:id", ReviewController.getReviewById)
 router.patch("/:type/:id", authorizeRoles(["user", "company"]), ReviewController.updateReview)
 router.delete("/:type/:id", authorizeRoles(["user"]), ReviewController.deleteReview)

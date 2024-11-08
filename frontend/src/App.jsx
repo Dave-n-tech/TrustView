@@ -21,6 +21,7 @@ import { SearchResultPage } from "./pages/shared/SearchResultPage";
 import { ProtectedRoute } from "./components/user/ProtectedRoute";
 import { DashboardAnalytics } from "./pages/business/DashboardAnalytics";
 import { ProfileSettings } from "./pages/business/ProfileSettings";
+import { CustomerReview } from "./pages/user/customerReview";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/user/:id" element={<UserProfile/>} />
           <Route path="/company/:id/:name" element={<BusinessProfile />}/>
           <Route path="/login/:userType?" element={<LoginPage />} />
+          <Route path="/customer-review-form/:companyId" element={<CustomerReview />} />
         </Route>
 
         <Route element={<BusinessLayout />}>

@@ -29,22 +29,6 @@ export const BusinessDashboard = () => {
   };
 
 
-  // const verifyReview = (reviewId) => {
-  //   // urgent fix!!!
-  //   // update review tag in database
-  //   setReviews((prevReviews) =>
-  //     prevReviews.map((review) =>
-  //       review.id === reviewId ? { ...review, tag: "verified" } : review
-  //     )
-  //   );
-  //   setFilteredReviews((prevReviews) =>
-  //     prevReviews.map((review) =>
-  //       review.id === reviewId ? { ...review, tag: "verified" } : review
-  //     )
-  //   );
-  // };
-
-
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
 

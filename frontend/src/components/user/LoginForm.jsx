@@ -16,9 +16,13 @@ export const LoginForm = ({isBusiness}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await login(formData)
-    alert("Successfully signed in");
-    isBusiness ? navigate("/business") : navigate("/");
+    try {
+      await login(formData)
+      alert("Successfully signed in");
+      isBusiness ? navigate("/business") : navigate("/");
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

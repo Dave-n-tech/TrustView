@@ -10,6 +10,7 @@ const companyRoute = require("./routes/companyRoute");
 const tokensRoute = require("./routes/tokensRoute");
 const cors = require("cors");
 const { getSentimentScore } = require("./utils/getSentimentScore");
+const { generateReviewToken } = require("./utils/generateToken");
 
 const app = express();
 app.use(express.json());
@@ -41,6 +42,13 @@ app.use("/api/verify-token", tokensRoute);
 
 //review route
 app.use("/api/reviews", reviewRoute);
+
+// get review token for invite
+app.get("/api/invite-token", (req, res) => {
+  const { email } = req.body;
+  const token = generateReviewToken({email})
+  res.json(token)
+});
 
 //get review sentiment score
 app.post("/api/sentiment", async (req, res) => {

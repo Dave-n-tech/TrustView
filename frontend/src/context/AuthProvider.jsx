@@ -104,11 +104,14 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("refreshToken", refresh_token);
       localStorage.setItem("authData", JSON.stringify(user));
     } catch (error) {
+      console.error(error)
       setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
+
+
 
   const logout = () => {
     setAuthData(null);

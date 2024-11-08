@@ -47,15 +47,10 @@ const updateCompany = async (req, res) => {
 };
 
 const sendEmailToCustomer = async (req, res) => {
-  //get customer email and name from request
-  //generate review link including token
-  //store token in the database
-  //send email with generated review link
 
-  const { name, email } = req.body;
+  const { customerEmail, title, message } = req.body;
   const { id } = req.params;
   let companyEmail;
-  const token = generateReviewToken(req.body);
 
   try {
     const company = await Company.getById(id);
@@ -64,13 +59,6 @@ const sendEmailToCustomer = async (req, res) => {
     res.status(500).json({ message: "an error occured", error: error });
   }
 
-  if (!token) {
-    return res.status(500).json({ message: "Failed to generate token" });
-  }
-
-  const reviewLink = `${process.env.FRONTEND_URL}/review-form/?token=${token}`;
-
-  // send email
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -85,9 +73,9 @@ const sendEmailToCustomer = async (req, res) => {
 
   const mailOptions = {
     from: `${companyEmail}`, //company email
-    to: `${email}`,
-    subject: "Please leave a review",
-    html: `<p>Hello ${name},<br> Kindly click the link to leave a review: <br> <a href="${reviewLink}">${reviewLink}</a></p>`,
+    to: `${customerEmail}`,
+    subject: `${title}`,
+    html: `${message}`,
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
