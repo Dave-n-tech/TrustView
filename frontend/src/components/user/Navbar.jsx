@@ -46,7 +46,7 @@ export const Navbar = () => {
                 alt="profile Image"
                 className="rounded-full w-12 h-12"
               />
-              <p>{authData.username}</p>
+              <p>{authData.username || authData.name}</p>
               <a href={`/user/${authData.id}`} className="hover:font-semibold hover:text-PrimaryBlue">Profile</a>
             </div>
           ) : (

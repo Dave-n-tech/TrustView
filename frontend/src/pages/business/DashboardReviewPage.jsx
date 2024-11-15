@@ -8,11 +8,11 @@ export const DashboardReviewPage = () => {
   const reviews = useOutletContext();
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     setFilteredReviews(reviews);
-    handleFilterChange("all")
+    handleFilterChange("all");
   }, [reviews]);
 
   const handleFilterChange = (status) => {
@@ -21,7 +21,7 @@ export const DashboardReviewPage = () => {
     switch (status) {
       case "all":
         setFilteredReviews(reviews);
-        setIsActive(true)
+        setIsActive(true);
         break;
 
       case "verified":
@@ -29,7 +29,7 @@ export const DashboardReviewPage = () => {
           (review) => review.tag === "verified"
         );
         setFilteredReviews(verifiedReviews);
-        setIsActive(true)
+        setIsActive(true);
         break;
 
       case "unverified":
@@ -37,13 +37,13 @@ export const DashboardReviewPage = () => {
           (review) => review.tag === "unverified"
         );
         setFilteredReviews(unverifiedReviews);
-        setIsActive(true)
+        setIsActive(true);
         break;
 
       case "rating":
         const sortedByRating = [...reviews].sort((a, b) => b.rating - a.rating);
         setFilteredReviews(sortedByRating);
-        setIsActive(true)
+        setIsActive(true);
         break;
 
       case "date":
@@ -51,12 +51,12 @@ export const DashboardReviewPage = () => {
           (a, b) => new Date(b.date) - new Date(a.date)
         );
         setFilteredReviews(sortedByDate);
-        setIsActive(true)
+        setIsActive(true);
         break;
 
       default:
         setFilteredReviews([]);
-        setIsActive(true)
+        setIsActive(true);
         break;
     }
   };
@@ -74,7 +74,7 @@ export const DashboardReviewPage = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mb-4">Dashboard</h1>
+      <h1 className="text-3xl font-bold text-center mb-4">Reviews</h1>
 
       {/* Filter Reviews */}
       <div className="flex flex-col md:flex-row justify-between items-center my-4">
@@ -117,12 +117,15 @@ export const DashboardReviewPage = () => {
         {filteredReviews.length === 0 ? (
           <p className="text-left my-2"> No reviews </p>
         ) : (
-          filteredReviews.map((filteredReview) => (
-            <DashboardReviewCard
-              key={filteredReview.id}
-              review={filteredReview}
-            />
-          ))
+          filteredReviews.map((filteredReview) => {
+            // console.log(filteredReview);
+            return (
+              <DashboardReviewCard
+                key={filteredReview.id}
+                review={filteredReview}
+              />
+            );
+          })
         )}
       </div>
 

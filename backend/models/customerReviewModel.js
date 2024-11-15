@@ -7,15 +7,19 @@ const customerReview = {
   },
 
   async getById(id) {
-    const [rows] = await pool.query(`SELECT * FROM customer_reviews WHERE id = ?`, [
-      id,
-    ]);
+    const [rows] = await pool.query(
+      `SELECT * FROM customer_reviews WHERE id = ?`,
+      [id]
+    );
     return rows[0];
   },
 
   async getByCompanyId(id) {
-    const [rows] = await pool.query('SELECT * FROM customer_reviews WHERE companyId = ? ORDER BY createdAt DESC', [id]);
-    return rows
+    const [rows] = await pool.query(
+      "SELECT * FROM customer_reviews WHERE companyId = ? ORDER BY createdAt DESC",
+      [id]
+    );
+    return rows;
   },
 
   async create(reviewData) {
@@ -27,7 +31,10 @@ const customerReview = {
   },
 
   async update(id, reviewData) {
-    await pool.query(`UPDATE customer_reviews SET ? WHERE id = ?`, [reviewData, id]);
+    await pool.query(`UPDATE customer_reviews SET ? WHERE id = ?`, [
+      reviewData,
+      id,
+    ]);
   },
 
   async deleteById(id) {

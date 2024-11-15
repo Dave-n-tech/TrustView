@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
         if (error.response.status === 401) {
           setAuthData(null);
           setLoggedIn(false);
+          setToken(null)
           localStorage.removeItem("authData");
           localStorage.removeItem("authToken");
         }
@@ -72,6 +73,7 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true,
       });
       const { access_token, refresh_token, user } = await response.data;
+      // console.log("From register in authprovider: ", user)
       setAuthData(user);
       setLoggedIn(true);
 

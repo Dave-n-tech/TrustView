@@ -8,8 +8,9 @@ export const SidebarMenu = () => {
 
   return (
     <div className="bg-PrimaryBlue w-64 h-full text-white fixed top-0 left-0 py-6 px-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">Dashboard</h2>
       <NavLink to="/business">
-        <h2 className="text-2xl font-bold mb-6 text-center">Trustview</h2>
+        <p className="hover:font-bold mb-6 text-left"> {"<- "}back to home</p>
       </NavLink>
       <ul className="space-y-4">
         <li>

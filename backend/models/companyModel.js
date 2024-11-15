@@ -8,19 +8,23 @@ const Company = {
 
   async getById(id) {
     const [rows] = await pool.query("SELECT * FROM companies WHERE id = ?", [
-      id
+      id,
     ]);
     return rows[0];
   },
 
-  async getByEmail(email){
-    const [rows] = await pool.query("SELECT * FROM companies WHERE email = ?", [email]);
-    return rows[0]
+  async getByEmail(email) {
+    const [rows] = await pool.query("SELECT * FROM companies WHERE email = ?", [
+      email,
+    ]);
+    return rows[0];
   },
 
   async getByName(name) {
-    const [rows] = await pool.query("SELECT * FROM companies WHERE name = ?", [name]);
-    return rows[0]
+    const [rows] = await pool.query("SELECT * FROM companies WHERE name = ?", [
+      name,
+    ]);
+    return rows[0];
   },
 
   async create(companyData) {
@@ -32,7 +36,10 @@ const Company = {
   },
 
   async update(id, companyData, columns) {
-    await pool.query(`UPDATE companies SET ${columns} WHERE id = ?`, [companyData, id]);
+    await pool.query(`UPDATE companies SET ${columns} WHERE id = ?`, [
+      companyData,
+      id,
+    ]);
   },
 
   async deleteId(id) {

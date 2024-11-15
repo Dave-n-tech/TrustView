@@ -20,7 +20,7 @@ const AuthController = {
         message: "user registered successfully",
         user: {
           id: newUser,
-          name: username,
+          username: username,
           email: email,
           role: "user"
         },

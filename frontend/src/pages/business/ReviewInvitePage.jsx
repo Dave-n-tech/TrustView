@@ -60,7 +60,14 @@ export const ReviewInvitePage = () => {
 
       console.log(response.data);
       alert("Email sent successfully");
-      navigate(0);
+      setFormData({
+        customerEmail: "",
+        title: "",
+        message: "",
+      });
+      setUniqueLink("");
+      setCopied(false);
+      
     } catch (error) {
       setError("Error sending email");
       console.error(error);

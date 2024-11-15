@@ -3,7 +3,7 @@ import { CompanyContext } from "../../context/CompanyProvider";
 import { AuthContext } from "../../context/AuthProvider";
 import { useContext } from "react";
 import axios from "../../api/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export const SubmitReview = () => {
@@ -15,12 +15,24 @@ export const SubmitReview = () => {
   const [rating, setRating] = useState(0);
   const [errMsg, setErrMsg] = useState("")
   const {companyId} = useParams()
+  const navigate = useNavigate()
+  const [loadingState, setLoadingState] = useState(false)
 
   useEffect(() => {
     if(companyId){
       setSelectedCompanyId(companyId)
     }
+
+    // navigateOnMount()
   },[companyId])
+
+  const navigateOnMount = () => {
+    console.log(token)
+
+    if(token === null){
+      navigate("/login")
+    }
+  }
 
   const handleSelectCompany = (e) => {
     setSelectedCompanyId(e.target.value);
@@ -33,6 +45,8 @@ export const SubmitReview = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingState(true)
+    setErrMsg("")
 
     try {
 
@@ -68,6 +82,8 @@ export const SubmitReview = () => {
     } catch (error) {
       setErrMsg(error.message)
       console.error("Error submitting review:", error);
+    }finally{
+      setLoadingState(false)
     }
 
   };
@@ -157,7 +173,7 @@ export const SubmitReview = () => {
           type="submit"
           className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
-          Submit Review
+          {loadingState ? "Submitting..." :"Submit Review"}
         </button>
       </form>
     </div>

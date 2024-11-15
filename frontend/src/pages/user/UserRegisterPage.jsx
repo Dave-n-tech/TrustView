@@ -6,9 +6,9 @@ import { AuthContext } from "../../context/AuthProvider";
 export const UserRegisterPage = () => {
   const { register, error, loading } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
-    password: ""
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -18,12 +18,18 @@ export const UserRegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log("from register page: ", formData)
     try {
       await register(formData, false);
       alert("Successfully registered user");
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
       navigate("/");
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
@@ -43,7 +49,7 @@ export const UserRegisterPage = () => {
         )}
         <input
           type="text"
-          name="name"
+          name="username"
           placeholder="Username"
           value={formData.name}
           onChange={handleChange}

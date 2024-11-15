@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ReviewCard } from "./ReviewCard";
-import { SearchBar } from "./SearchBar";
+import { CompanySelector } from "./CompanySelector";
 
 export const ReviewSection = () => {
   const [reviews, setReviews] = useState([]);
@@ -59,10 +59,11 @@ export const ReviewSection = () => {
 
   return (
     <section id="reviews" className="container mx-auto mb-12">
-      <h1 className="text-PrimaryBlue font-bold text-3xl text-center mb-5">
-        Recent Reviews
+      <h1 className="text-PrimaryBlue font-bold text-3xl text-center mb-5">View Reviews</h1>
+      <CompanySelector />
+      <h1 className="text-PrimaryBlue font-bold text-3xl text-center mb-1">
+        Recent
       </h1>
-      <SearchBar />
       {errMsg && (
         <p className="text-center bg-red-200 text-red-600 p-3">
           Error: {errMsg}
