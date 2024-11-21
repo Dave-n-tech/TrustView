@@ -16,7 +16,6 @@ import { DashboardReviewPage } from "./pages/business/DashboardReviewPage";
 import { LoginPage } from "./pages/shared/LoginPage";
 import { UserLayout } from "./Layouts/UserLayout";
 import { BusinessLayout } from "./Layouts/BusinessLayout";
-import { SearchResultPage } from "./pages/shared/SearchResultPage";
 
 import { ProtectedRoute } from "./components/user/ProtectedRoute";
 import { DashboardAnalytics } from "./pages/business/DashboardAnalytics";
@@ -52,8 +51,6 @@ function App() {
           <Route path="/dashboard/business/:id/profile-settings" element={<ProfileSettings />} />
         </Route>
 
-        {/* shared Routes */}
-        <Route path="/search?query" element={<SearchResultPage />} />
       </Routes>
     </>
   );

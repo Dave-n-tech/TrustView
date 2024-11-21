@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const DashboardReviewCard = ({ review }) => {
+export const DashboardReviewCard = ({ review, user }) => {
   const { token } = useContext(AuthContext);
   const [error, setError] = useState("")
   const navigate = useNavigate()
@@ -42,6 +42,7 @@ export const DashboardReviewCard = ({ review }) => {
       key={review.id}
       className="border border-blue-200 rounded-md p-4 bg-white hover:shadow-xl"
     >
+      <p>from: {user?.username || review.customerName}</p>
       <p className="text-sm text-gray-500">{formatDate(review.createdAt)}</p>
       <p className="text-md font-semibold">
         Rating:

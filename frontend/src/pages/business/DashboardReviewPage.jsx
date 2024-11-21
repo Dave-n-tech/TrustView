@@ -3,62 +3,98 @@ import { FilterButton } from "../../components/business/FilterButton";
 import { CSVLink } from "react-csv";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import axios from "../../api/axios";
 
 export const DashboardReviewPage = () => {
   const reviews = useOutletContext();
   const [filteredReviews, setFilteredReviews] = useState([]);
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    setFilteredReviews(reviews);
+    // setFilteredReviews(reviews);
     handleFilterChange("all");
+
+    const getUsers = async () => {
+      try {
+        const res = await axios.get(`/users`);
+        const users = res.data;
+        setUsers(users);
+      } catch (error) {
+        setErrMsg("Error getting users");
+        console.error("An error occured: ", error);
+      }
+    };
+
+    getUsers();
   }, [reviews]);
+
+  useEffect(() => {
+    console.log(filteredReviews);
+  }, [filteredReviews]);
+
+  const clearReviewState = () => {
+    setFilteredReviews([]);
+  };
 
   const handleFilterChange = (status) => {
     setFilterStatus(status);
+    clearReviewState();
 
-    switch (status) {
-      case "all":
-        setFilteredReviews(reviews);
-        setIsActive(true);
-        break;
+    setTimeout(() => {
+      switch (status) {
+        case "all":
+          setFilteredReviews(reviews);
+          setIsActive(true);
+          break;
 
-      case "verified":
-        const verifiedReviews = reviews.filter(
-          (review) => review.tag === "verified"
-        );
-        setFilteredReviews(verifiedReviews);
-        setIsActive(true);
-        break;
+        case "verified":
+          const verifiedReviews = reviews.filter(
+            (review) => review.tag === "verified"
+          );
+          setFilteredReviews(verifiedReviews);
+          setIsActive(true);
+          break;
 
-      case "unverified":
-        const unverifiedReviews = reviews.filter(
-          (review) => review.tag === "unverified"
-        );
-        setFilteredReviews(unverifiedReviews);
-        setIsActive(true);
-        break;
+        case "unverified":
+          const unverifiedReviews = reviews.filter(
+            (review) => review.tag === "unverified"
+          );
+          setFilteredReviews(unverifiedReviews);
+          setIsActive(true);
+          break;
 
-      case "rating":
-        const sortedByRating = [...reviews].sort((a, b) => b.rating - a.rating);
-        setFilteredReviews(sortedByRating);
-        setIsActive(true);
-        break;
+        case "rating":
+          const sortedByRating = [...reviews].sort(
+            (a, b) => b.rating - a.rating
+          );
+          setFilteredReviews(sortedByRating);
+          setIsActive(true);
+          break;
 
-      case "date":
-        const sortedByDate = [...reviews].sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
-        );
-        setFilteredReviews(sortedByDate);
-        setIsActive(true);
-        break;
+        case "date":
+          const sortedByDate = [...reviews].sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
+          );
+          setFilteredReviews(sortedByDate);
+          setIsActive(true);
+          break;
 
-      default:
-        setFilteredReviews([]);
-        setIsActive(true);
-        break;
-    }
+        case "customers":
+          const customerReviews = reviews.filter((review) =>
+            review.hasOwnProperty("customerEmail")
+          );
+          setFilteredReviews(customerReviews);
+          setIsActive(true);
+          break;
+
+        default:
+          setFilteredReviews([]);
+          setIsActive(true);
+          break;
+      }
+    }, 0);
   };
 
   const exportReviewsAsCSV = () => {
@@ -109,6 +145,12 @@ export const DashboardReviewPage = () => {
             filterStatus={filterStatus}
             active={isActive}
           />
+          <FilterButton
+            handleChange={() => handleFilterChange("customers")}
+            filterBy={"customers"}
+            filterStatus={filterStatus}
+            active={isActive}
+          />
         </div>
       </div>
 
@@ -119,10 +161,16 @@ export const DashboardReviewPage = () => {
         ) : (
           filteredReviews.map((filteredReview) => {
             // console.log(filteredReview);
+            const user = users.find(
+              (user) =>
+                user.id === filteredReview.userId && user.hasOwnProperty("username")
+            );
+
             return (
               <DashboardReviewCard
                 key={filteredReview.id}
                 review={filteredReview}
+                user={user}
               />
             );
           })
