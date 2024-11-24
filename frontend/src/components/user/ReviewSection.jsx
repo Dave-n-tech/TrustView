@@ -42,7 +42,7 @@ export const ReviewSection = () => {
         });
         setReviews(reviewsWithCompanyNames);
       } catch (error) {
-        setErrMsg(error.message);
+        setErrMsg("Error fetching reviews");
         console.error(error);
       }
     };
