@@ -30,28 +30,28 @@ app.get("/", (req, res) => {
 });
 
 //auth routes
-app.use("/api/auth/user", userAuthRoute);
-app.use("/api/auth/company", companyAuthRoute);
-app.post("/api/auth/refresh", AuthController.refreshAccessToken);
-app.post("/api/auth/login", AuthController.login);
+app.use("/auth/user", userAuthRoute);
+app.use("/auth/company", companyAuthRoute);
+app.post("/auth/refresh", AuthController.refreshAccessToken);
+app.post("/auth/login", AuthController.login);
 
 // other routes
-app.use("/api/users", userRoute);
-app.use("/api/companies", companyRoute);
-app.use("/api/verify-token", tokensRoute);
+app.use("/users", userRoute);
+app.use("/companies", companyRoute);
+app.use("/verify-token", tokensRoute);
 
 //review route
-app.use("/api/reviews", reviewRoute);
+app.use("/reviews", reviewRoute);
 
 // get review token for invite
-app.get("/api/invite-token", (req, res) => {
+app.get("/invite-token", (req, res) => {
   const { email } = req.body;
   const token = generateReviewToken({email})
   res.json(token)
 });
 
 //get review sentiment score
-app.post("/api/sentiment", async (req, res) => {
+app.post("/sentiment", async (req, res) => {
   const review = req.body.review;
 
   try {
