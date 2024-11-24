@@ -5,7 +5,7 @@ import { UserRegisterPage } from "./pages/user/UserRegisterPage";
 import { UserDashboard } from "./pages/user/UserDashboard";
 import { SubmitReview } from "./pages/user/SubmitReview";
 import { UserProfile } from "./pages/user/UserProfile";
-import { BusinessProfile } from "./pages/user/businessProfile";
+import { BusinessProfile } from "./pages/user/BusinessProfile";
 
 import { BusinessLandingPage } from "./pages/business/BusinessLandingPage";
 import { BusinessRegisterPage } from "./pages/business/BusinessRegisterPage";
@@ -20,7 +20,7 @@ import { BusinessLayout } from "./Layouts/BusinessLayout";
 // import { ProtectedRoute } from "./components/user/ProtectedRoute";
 import { DashboardAnalytics } from "./pages/business/DashboardAnalytics";
 import { ProfileSettings } from "./pages/business/ProfileSettings";
-import { CustomerReview } from "./pages/user/customerReview";
+import { CustomerReview } from "./pages/user/CustomerReview";
 
 
 function App() {
