@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export default axios.create({
-    baseURL: "http://localhost:3000/api"
+    baseURL: import.meta.env.VITE_SERVER_URL
 })
 
 axios.interceptors.response.use(
