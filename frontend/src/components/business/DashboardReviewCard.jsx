@@ -63,7 +63,7 @@ export const DashboardReviewCard = ({ review, user }) => {
               review.tag === "verified" ? "text-green-600" : "text-red-600"
             }`}
           >
-            {review.tag === "verified" ? "Yes" : "No"}
+            {review.tag === "verified" ? " Yes" : " No"}
           </span>
         </p>
       </div>
