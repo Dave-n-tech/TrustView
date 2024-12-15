@@ -15,8 +15,8 @@ export const SubmitReview = () => {
   const [rating, setRating] = useState(0);
   const [errMsg, setErrMsg] = useState("")
   const {companyId} = useParams()
-  const navigate = useNavigate()
   const [loadingState, setLoadingState] = useState(false)
+  // const navigate = useNavigate()
 
   useEffect(() => {
     if(companyId){
@@ -26,13 +26,13 @@ export const SubmitReview = () => {
     // navigateOnMount()
   },[companyId])
 
-  const navigateOnMount = () => {
-    console.log(token)
+  // const navigateOnMount = () => {
+  //   console.log(token)
 
-    if(token === null){
-      navigate("/login")
-    }
-  }
+  //   if(token === null){
+  //     navigate("/login")
+  //   }
+  // }
 
   const handleSelectCompany = (e) => {
     setSelectedCompanyId(e.target.value);
@@ -80,7 +80,7 @@ export const SubmitReview = () => {
        }
       
     } catch (error) {
-      setErrMsg(error.message)
+      setErrMsg("Error submitting review")
       console.error("Error submitting review:", error);
     }finally{
       setLoadingState(false)
